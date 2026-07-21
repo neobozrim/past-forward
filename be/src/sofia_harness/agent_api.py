@@ -15,6 +15,7 @@ from .overlay_agent import apply_typography,place_two_point_with_api,place_with_
 from .archive_index import hybrid_search
 
 IMAGE_SUFFIXES={".png",".jpg",".jpeg",".tif",".tiff",".webp"}
+PROJECT_ROOT=Path(__file__).resolve().parents[2]
 jobs={};conversations={};active_resumes=set();lock=threading.Lock()
 
 def _normalized_transcription(folder:Path,stem:str)->dict:
@@ -163,7 +164,10 @@ def cited_resources(answer,resources):
 def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,search_answers_enabled=None,search_client=None,
                      auth_required=None,supabase_url=None,supabase_publishable_key=None,landing_enabled=None,
                      admin_emails=None):
-    app=FastAPI(title="Past Forward");root=Path(output_root).resolve();root.mkdir(parents=True,exist_ok=True);inbox=Path("agent_inbox").resolve()
+    app=FastAPI(title="Past Forward")
+    output_path=Path(output_root)
+    if output_root=="digitized" and not output_path.is_absolute():output_path=PROJECT_ROOT/output_path
+    root=output_path.resolve();root.mkdir(parents=True,exist_ok=True);inbox=(PROJECT_ROOT/"agent_inbox").resolve()
     frontend_urls=[url.strip().rstrip("/") for url in os.getenv("PAST_FORWARD_FRONTEND_URLS","http://localhost:5173").split(",") if url.strip()]
     app.add_middleware(
         CORSMiddleware,
@@ -172,7 +176,13 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
         allow_methods=["GET","POST","PATCH","OPTIONS"],
         allow_headers=["Authorization","Content-Type"],
     )
-    search_db=Path(search_db or os.getenv("PAST_FORWARD_SEARCH_DB","search_data/index/archive.db")).resolve()
+    configured_search_db=os.getenv("PAST_FORWARD_SEARCH_DB")
+    if search_db is not None:search_db=Path(search_db).resolve()
+    elif configured_search_db:
+        search_db=Path(configured_search_db)
+        if not search_db.is_absolute():search_db=PROJECT_ROOT/search_db
+        search_db=search_db.resolve()
+    else:search_db=(PROJECT_ROOT/"search_data/index/archive.db").resolve()
     if api_enabled is None:api_enabled=os.getenv("PAST_FORWARD_API_ENABLED","false").strip().casefold() in {"1","true","yes","on"}
     if search_answers_enabled is None:search_answers_enabled=os.getenv("PAST_FORWARD_SEARCH_ANSWERS_ENABLED","false").strip().casefold() in {"1","true","yes","on"}
     if auth_required is None:auth_required=os.getenv("PAST_FORWARD_AUTH_REQUIRED","false").strip().casefold() in {"1","true","yes","on"}
@@ -384,6 +394,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
         budget=resource_budget(query);rows=hybrid_search(search_db,query,max(12,min(budget*3,50)),client=active_search_client());results=[]
         for row in rows:
             source=Path(row.pop("source_path"));source_url=None
+            if not source.is_file():source=root/source.parent.name/source.name
             try:source_url="/outputs/"+source.resolve().relative_to(root).as_posix()
             except ValueError:pass
             inspect_url=f"/overlay-inspection?source={quote(source.resolve().relative_to(root).as_posix())}" if source_url else None

@@ -18,7 +18,15 @@ be/uploads/
 be/agent_inbox/
 be/retired_sqlite/
 be/search_data/index/*.db-*
-be/digitized/
+be/digitized/*
+!be/digitized/20260720-1505_IMG_0982_nm_07_04_1949_page1_codex-development/
+!be/digitized/20260720-1624_IMG_0933_rd_07_04_1949_page3_incremental/
+!be/digitized/20260720-1837_IMG_0923_rd_07_02_1949_page2_incremental/
+!be/digitized/20260721-0814_IMG_0965_st_07_15_1949_page1_incremental/
+!be/digitized/20260721-0827_IMG_0935_rd_07_05_1949_page1_incremental/
+!be/digitized/20260721-0904_IMG_0967_st_07_15_1949_page2_incremental/
+!be/digitized/20260721-0907_IMG_0936_rd_07_05_1949_page2_incremental/
+be/digitized/**/audit/
 be/real_e2e/
 be/train-20260717T214057Z-1-001/
 be/backups/

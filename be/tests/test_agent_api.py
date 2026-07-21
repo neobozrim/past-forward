@@ -325,6 +325,14 @@ def test_archive_search_reports_missing_index(tmp_path):
     assert client.get("/api/search",params={"q":"test"}).status_code==503
 
 
+def test_default_paths_are_independent_of_working_directory(tmp_path,monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    client=TestClient(agent_api.create_agent_app(api_enabled=False,auth_required=False))
+    health=client.get("/health").json()
+    assert health["search_ready"] is True
+    assert Path(health["output_root"])==agent_api.PROJECT_ROOT/"digitized"
+
+
 def test_archive_search_stream_emits_incremental_answer_and_final_resources(tmp_path):
     root=tmp_path/"digitized";run=root/"run";run.mkdir(parents=True)
     source=run/"IMG_1_nm_07_04_1949_page1.png";Image.new("RGB",(20,20),"white").save(source)
