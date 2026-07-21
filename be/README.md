@@ -29,7 +29,7 @@ Open `http://127.0.0.1:8000`.
 
 Attach or drag one or more images into the chat and state the scope, for example `digitise the complete page` or `digitise only the article headed ...`. A file without a clear instruction causes the agent to ask one clarification. Status events stream while work is running. Each completed article survives later timeouts and an interrupted incremental run can resume from its saved anchors.
 
-With `PAST_FORWARD_API_ENABLED=false`, the UI remains available but paid model execution is disabled. This is the safe setting while real pages are being tested through Codex.
+`PAST_FORWARD_API_ENABLED=true` enables paid model execution for authenticated administrators. Set it to `false` to leave the UI and Library available while disabling digitization calls.
 
 ## Output
 

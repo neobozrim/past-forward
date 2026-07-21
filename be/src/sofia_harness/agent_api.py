@@ -183,7 +183,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
         if not search_db.is_absolute():search_db=PROJECT_ROOT/search_db
         search_db=search_db.resolve()
     else:search_db=(PROJECT_ROOT/"search_data/index/archive.db").resolve()
-    if api_enabled is None:api_enabled=os.getenv("PAST_FORWARD_API_ENABLED","false").strip().casefold() in {"1","true","yes","on"}
+    if api_enabled is None:api_enabled=os.getenv("PAST_FORWARD_API_ENABLED","true").strip().casefold() in {"1","true","yes","on"}
     if search_answers_enabled is None:search_answers_enabled=os.getenv("PAST_FORWARD_SEARCH_ANSWERS_ENABLED","false").strip().casefold() in {"1","true","yes","on"}
     if auth_required is None:auth_required=os.getenv("PAST_FORWARD_AUTH_REQUIRED","false").strip().casefold() in {"1","true","yes","on"}
     if landing_enabled is None:landing_enabled=os.getenv("PAST_FORWARD_LANDING_ENABLED","true").strip().casefold() in {"1","true","yes","on"}
