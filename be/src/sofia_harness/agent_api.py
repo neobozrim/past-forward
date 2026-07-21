@@ -397,7 +397,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
             if not source.is_file():source=root/source.parent.name/source.name
             try:source_url="/outputs/"+source.resolve().relative_to(root).as_posix()
             except ValueError:pass
-            inspect_url=f"/overlay-inspection?source={quote(source.resolve().relative_to(root).as_posix())}" if source_url else None
+            inspect_url=f"/overlay-inspection.html?source={quote(source.resolve().relative_to(root).as_posix())}" if source_url else None
             excerpt=row.pop("relevant_excerpt","");row.pop("verbatim_text",None)
             results.append({**row,"relevant_excerpt":excerpt[:1600],"source_url":source_url,"inspect_url":inspect_url})
         deduplicated=[];seen=set()
@@ -512,7 +512,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
             try:validate_accepted_plan(json.loads(plan.read_text(encoding="utf-8")))
             except (OSError,json.JSONDecodeError,ValueError):continue
             seen.add(identity);relative=image.relative_to(root).as_posix();label=f"{match.group(2)}.{match.group(3)}.{match.group(4)} · Page {int(match.group(5))}" if match else image.stem
-            groups.setdefault(names.get(code,code.upper()),[]).append({"label":label,"image_path":relative,"inspect_url":"/overlay-inspection?source="+quote(relative)})
+            groups.setdefault(names.get(code,code.upper()),[]).append({"label":label,"image_path":relative,"inspect_url":"/overlay-inspection.html?source="+quote(relative)})
         return [{"newspaper":name,"pages":sorted(pages,key=lambda page:page["label"])} for name,pages in sorted(groups.items())]
     @app.get("/api/overlay/sources")
     def overlay_sources():
@@ -684,6 +684,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
         rendered=rendered.replace("__LANDING_ENABLED__","true" if landing_enabled else "false")
         return HTMLResponse(rendered,headers={"Cache-Control":"no-store"})
     @app.get("/overlay-inspection",response_class=HTMLResponse,include_in_schema=False)
+    @app.get("/overlay-inspection.html",response_class=HTMLResponse,include_in_schema=False)
     def overlay_inspection():return HTMLResponse(OVERLAY_INSPECTION_HTML,headers={"Cache-Control":"no-store"})
     return app
 

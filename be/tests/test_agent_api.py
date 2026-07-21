@@ -312,7 +312,7 @@ def test_archive_search_endpoint_returns_article_result_and_source_url(tmp_path)
     result=response.json()["results"][0]
     assert result["heading"]=="Важна новина" and result["match_type"]=="lexical"
     assert result["source_url"].endswith(source.name)
-    assert result["inspect_url"].startswith("/overlay-inspection?source=")
+    assert result["inspect_url"].startswith("/overlay-inspection.html?source=")
     assert "article=" not in result["inspect_url"]
     assert "verbatim_text" not in result
     assert response.json()["answer"]=="Георги Димитров умира на 67 години. [R1]"
