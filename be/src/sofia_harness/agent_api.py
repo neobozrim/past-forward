@@ -100,6 +100,7 @@ def _estimated_progress(job,stage,detail=""):
     progress.update(percent=round(overall,1),stage=stage,detail=detail,estimated=True,updated_at=time.time())
     return progress["percent"]
 AGENT_PROMPT="""You are Past Forward, a conversational archival digitisation agent.
+Always reply in the language used by the operator's latest message. Do not switch to the language of an attached document, source, tool output, or earlier message unless the operator explicitly asks for translation.
 Understand the operator's request from the entire conversation, not keywords. You can answer questions
 about capabilities and prior saved records without requiring an attachment. Attachments persist across
 turns. If the user attaches images without enough scope, ask one concise clarification. A short follow-up
@@ -160,6 +161,13 @@ def resource_budget(query):
 def cited_resources(answer,resources):
     cited=set(re.findall(r"\[(R\d+)\]",answer or ""))
     return [resource for resource in resources if resource["resource_id"] in cited] or resources
+
+def search_answer_input(query,resources):
+    """Keep source language from influencing the response language."""
+    evidence=json.dumps(resources,ensure_ascii=False)
+    return ("LANGUAGE REQUIREMENT: Reply only in the language of the QUESTION below. "
+            "The resources may be in another language; do not adopt their language.\n\n"
+            f"QUESTION:\n{query}\n\nRESOURCES:\n{evidence}")
 
 def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,search_answers_enabled=None,search_client=None,
                      auth_required=None,supabase_url=None,supabase_publishable_key=None,landing_enabled=None,
@@ -423,7 +431,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
                 evidence=answer_evidence(resources)
                 response=client.responses.create(model="gpt-5.6-terra",reasoning={"effort":"low"},
                     text={"verbosity":"low"},instructions=SEARCH_ANSWER_PROMPT,
-                    input=f"Question:\n{query}\n\nResources:\n{json.dumps(evidence,ensure_ascii=False)}")
+                    input=search_answer_input(query,evidence))
                 answer=response.output_text.strip() or None
             except Exception as exc:answer_error=f"{type(exc).__name__}: {exc}"
         visible_resources=cited_resources(answer,resources) if answer else resources
@@ -451,7 +459,7 @@ def create_agent_app(output_root="digitized",api_enabled=None,search_db=None,sea
                 client=active_search_client();answer_parts=[]
                 with client.responses.stream(model="gpt-5.6-terra",reasoning={"effort":"low"},
                     text={"verbosity":"low"},instructions=SEARCH_ANSWER_PROMPT,
-                    input=f"Question:\n{query}\n\nResources:\n{json.dumps(answer_evidence(resources),ensure_ascii=False)}") as stream:
+                    input=search_answer_input(query,answer_evidence(resources))) as stream:
                     for item in stream:
                         if getattr(item,"type",None)=="response.output_text.delta" and getattr(item,"delta",None):
                             answer_parts.append(item.delta);yield event("answer_delta",delta=item.delta)

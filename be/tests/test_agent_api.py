@@ -30,10 +30,11 @@ class FakeOpenAI:
 class FakeSearchResponses:
     def create(self,**kwargs):
         assert kwargs["model"]=="gpt-5.6-terra"
-        assert "Resources:" in kwargs["input"] and "[R1]" not in kwargs["input"]
+        assert "LANGUAGE REQUIREMENT:" in kwargs["input"] and "RESOURCES:" in kwargs["input"] and "[R1]" not in kwargs["input"]
         return SimpleNamespace(output_text="Георги Димитров умира на 67 години. [R1]")
     def stream(self,**kwargs):
         assert kwargs["model"]=="gpt-5.6-terra"
+        assert "LANGUAGE REQUIREMENT:" in kwargs["input"] and "QUESTION:" in kwargs["input"]
         return FakeSearchStream()
 
 
@@ -377,6 +378,9 @@ def test_resource_budget_adapts_to_question_scope():
 
 def test_search_answer_prompt_matches_language_and_stays_source_neutral():
     assert "Always answer in the same language as the user's question" in agent_api.SEARCH_ANSWER_PROMPT
+    assert "Always reply in the language used by the operator's latest message" in agent_api.AGENT_PROMPT
+    request=agent_api.search_answer_input("What happened?",[{"text":"Ð‘ÑŠÐ»Ð³Ð°Ñ€ÑÐºÐ¸ Ð¸Ð·Ñ‚Ð¾Ñ‡Ð½Ð¸Ðº"}])
+    assert "Reply only in the language of the QUESTION" in request and "QUESTION:\nWhat happened?" in request
     assert "Be OBJECTIVE AND NEUTRAL. it passes information as it has been stated by a given source - just as it has been given - nothing more, nothing less. Users draw their own conclusions about the past, what to learn from it and how to avoid repeating past mistakes in the future." in agent_api.SEARCH_ANSWER_PROMPT
 
 
