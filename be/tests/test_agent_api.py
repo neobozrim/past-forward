@@ -511,7 +511,13 @@ def test_unaccepted_legacy_coordinate_demos_are_not_listed():
 
 def test_completed_result_links_to_overlay_inspection():
     assert '>Inspect Source</a>' in HTML
-    assert 'href="/overlay-inspection" target=_blank' in HTML
+    assert 'href="/overlay-inspection.html" target=_blank' in HTML
+
+
+def test_library_inspection_back_link_preserves_guest_library():
+    assert "page.inspect_url+'&from=library'" in HTML
+    assert "get('from')==='library'" in agent_api.OVERLAY_INSPECTION_HTML
+    assert "location.href='/?view=library'" in agent_api.OVERLAY_INSPECTION_HTML
 
 
 def test_direct_resume_reports_missing_checkpoint_without_planning_call(tmp_path,monkeypatch):
