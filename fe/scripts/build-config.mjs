@@ -1,8 +1,12 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 
 const value = (name, fallback = "") => process.env[name] ?? fallback;
+const normalizeUrl = raw => {
+  const url = raw.trim().replace(/\/$/, "");
+  return url && !/^https?:\/\//i.test(url) ? `https://${url}` : url;
+};
 const config = {
-  apiUrl: value("VITE_API_URL", "http://localhost:8000").replace(/\/$/, ""),
+  apiUrl: normalizeUrl(value("VITE_API_URL", "http://localhost:8000")),
   supabaseUrl: value("VITE_SUPABASE_URL"),
   supabasePublishableKey: value("VITE_SUPABASE_PUBLISHABLE_KEY"),
   authRequired: value("VITE_AUTH_REQUIRED", "false") === "true",
