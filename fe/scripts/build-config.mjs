@@ -1,0 +1,14 @@
+import { mkdirSync, writeFileSync } from "node:fs";
+
+const value = (name, fallback = "") => process.env[name] ?? fallback;
+const config = {
+  apiUrl: value("VITE_API_URL", "http://localhost:8000").replace(/\/$/, ""),
+  supabaseUrl: value("VITE_SUPABASE_URL"),
+  supabasePublishableKey: value("VITE_SUPABASE_PUBLISHABLE_KEY"),
+  authRequired: value("VITE_AUTH_REQUIRED", "false") === "true",
+  authConfigured: value("VITE_AUTH_CONFIGURED", "false") === "true",
+  landingEnabled: value("VITE_LANDING_ENABLED", "true") === "true"
+};
+
+mkdirSync("public", { recursive: true });
+writeFileSync("public/config.js", `window.PF_CONFIG=${JSON.stringify(config)};\n`);

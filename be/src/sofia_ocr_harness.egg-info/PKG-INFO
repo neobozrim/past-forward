@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: sofia-ocr-harness
+Version: 0.1.0
+Summary: Auditable layout and OCR evaluation harness for Bulgarian newspaper scans
+Requires-Python: >=3.11
+Requires-Dist: openai>=1.68
+Requires-Dist: braintrust==0.30.1
+Requires-Dist: Pillow>=10.0
+Requires-Dist: pydantic>=2.7
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: opencv-python-headless>=4.10
+Requires-Dist: numpy>=2.0
+Requires-Dist: fastapi>=0.115
+Requires-Dist: uvicorn>=0.34
+Requires-Dist: python-multipart>=0.0.20
+Requires-Dist: python-dotenv>=1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"

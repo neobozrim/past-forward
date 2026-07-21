@@ -1,0 +1,40 @@
+{
+  "driver": "codex_visual_manual",
+  "coordinate_system": "normalized_0_1000",
+  "pages": [
+    {
+      "file": "IMG_0923_rd_07_02_1949_page2.png",
+      "page_type": "newspaper_inside_page",
+      "language": "bg",
+      "regions": [
+        {"id":"p2_title","type":"headline","article_id":"p2_feature","reading_order":0,"polygon":[[45,125],[950,125],[950,166],[45,166]],"text":"ПРИВЕТ НА ПЪРВАТА БРИГАДИРСКА СМЯНА!","confidence":0.98},
+        {"id":"p2_left_head","type":"headline","article_id":"p2_left","reading_order":1,"polygon":[[55,166],[285,166],[285,201],[55,201]],"text":"РАБОТАТА НА ПЪРВА БРИГАДИРСКА СМЯНА","confidence":0.96},
+        {"id":"p2_left_body","type":"body_column","article_id":"p2_left","reading_order":2,"polygon":[[42,198],[292,198],[292,568],[42,568]],"needs_enhancement":true},
+        {"id":"p2_feature_head","type":"headline","article_id":"p2_feature","reading_order":3,"polygon":[[295,156],[682,156],[682,205],[295,205]],"text":"ПО ДАЛЕКОПРОВОДА","confidence":0.98},
+        {"id":"p2_feature_photo","type":"photo","article_id":"p2_feature","reading_order":4,"polygon":[[296,210],[545,210],[545,445],[296,445]]},
+        {"id":"p2_feature_body","type":"body_column","article_id":"p2_feature","reading_order":5,"polygon":[[286,188],[706,188],[706,787],[286,787]],"needs_enhancement":true},
+        {"id":"p2_right_head","type":"headline","article_id":"p2_right","reading_order":6,"polygon":[[700,150],[945,150],[945,195],[700,195]],"text":"ПЪРВАТА СМЯНА НА ЯЗОВИРА „ГЕОРГИ ДИМИТРОВ“","confidence":0.95},
+        {"id":"p2_right_body","type":"body_column","article_id":"p2_right","reading_order":7,"polygon":[[700,190],[955,190],[955,786],[700,786]],"needs_enhancement":true},
+        {"id":"p2_bottom_head","type":"headline","article_id":"p2_bottom","reading_order":8,"polygon":[[330,790],[660,790],[660,835],[330,835]],"text":"Скици от Димитровград","confidence":0.99},
+        {"id":"p2_bottom_body","type":"body_column","article_id":"p2_bottom","reading_order":9,"polygon":[[30,790],[958,790],[958,970],[30,970]],"needs_enhancement":true}
+      ]
+    },
+    {
+      "file": "IMG_0924_rd_07_02_1949_page3.png",
+      "page_type": "newspaper_inside_page",
+      "language": "bg",
+      "regions": [
+        {"id":"p3_decree_head","type":"headline","article_id":"p3_decree","reading_order":0,"polygon":[[65,128],[570,128],[570,169],[65,169]],"text":"Важно постановление на Министерския съвет","confidence":0.99},
+        {"id":"p3_decree_body","type":"body_column","article_id":"p3_decree","reading_order":1,"polygon":[[55,166],[573,166],[573,820],[55,820]],"needs_enhancement":true},
+        {"id":"p3_top_right_head","type":"headline","article_id":"p3_top_right","reading_order":2,"polygon":[[578,128],[943,128],[943,181],[578,181]],"text":"Трудещите се постигат нови успехи в борбата за предсрочно изпълнение на стопанския план, с книжарско съревнование и подобряване качеството на производството","confidence":0.86},
+        {"id":"p3_top_right_body","type":"body_column","article_id":"p3_top_right","reading_order":3,"polygon":[[575,175],[944,175],[944,401],[575,401]],"needs_enhancement":true},
+        {"id":"p3_plenum_head","type":"headline","article_id":"p3_plenum","reading_order":4,"polygon":[[580,400],[950,400],[950,458],[580,458]],"text":"ОКОЛИЙСКИТЕ ПЛЕНУМИ НА БКП ВЪЗПРИЕМАТ ЕДИНОДУШНО РЕШЕНИЯТА НА ЮНСКИЯ ПЛЕНУМ НА ЦК","confidence":0.97},
+        {"id":"p3_plenum_body","type":"body_column","article_id":"p3_plenum","reading_order":5,"polygon":[[575,452],[950,452],[950,782],[575,782]],"needs_enhancement":true},
+        {"id":"p3_sport_head","type":"headline","article_id":"p3_sport","reading_order":6,"polygon":[[785,585],[948,585],[948,630],[785,630]],"text":"Физкултура и спорт","confidence":0.99},
+        {"id":"p3_sport_body","type":"body_column","article_id":"p3_sport","reading_order":7,"polygon":[[782,625],[950,625],[950,952],[782,952]],"needs_enhancement":true},
+        {"id":"p3_reader_head","type":"headline","article_id":"p3_reader","reading_order":8,"polygon":[[76,817],[315,817],[315,847],[76,847]],"text":"Справочник на читателя","confidence":0.99},
+        {"id":"p3_reader_body","type":"body_column","article_id":"p3_reader","reading_order":9,"polygon":[[67,842],[315,842],[315,957],[67,957]],"needs_enhancement":true}
+      ]
+    }
+  ]
+}

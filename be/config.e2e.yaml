@@ -1,0 +1,29 @@
+dataset:
+  images: train-20260717T214057Z-1-001/train
+  patterns: ["*.png", "*.jpg", "*.jpeg", "*.tif", "*.tiff"]
+  output: runs
+models:
+  classifier: gpt-5.6-luna
+  layout: gpt-5.6-terra
+  layout_escalation: gpt-5.6-sol
+  ocr_easy: gpt-5.6-luna
+  ocr_hard: gpt-5.6-terra
+  adjudicator: gpt-5.6-sol
+routing:
+  hard_labels: [Heading, Subheading, Image Description]
+  disagreement_threshold: 0.92
+  confidence_threshold: 0.85
+  layout_confidence_threshold: 0.82
+  difficult_page_threshold: 0.70
+run:
+  max_pages: null
+  concurrency: 2
+  seed: 7
+qc:
+  min_short_edge_px: 1800
+  blur_variance_min: 80
+  max_abs_skew_degrees: 2.0
+  max_illumination_range: 70
+  blank_ink_coverage_max: 0.003
+  edge_ink_ratio_max: 0.08
+  duplicate_hash_distance: 3

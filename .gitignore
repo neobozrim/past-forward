@@ -1,0 +1,34 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Runtime data and generated artifacts
+be/data/*.db
+be/data/*.db-*
+be/runs/
+be/uploads/
+be/agent_inbox/
+be/retired_sqlite/
+be/search_data/index/*.db-*
+be/digitized/
+be/real_e2e/
+be/train-20260717T214057Z-1-001/
+be/backups/
+be/submission-assets/
+be/validation_preprocessing/
+
+# Editors and operating systems
+node_modules/
+dist/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

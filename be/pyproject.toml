@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sofia-ocr-harness"
+version = "0.1.0"
+description = "Auditable layout and OCR evaluation harness for Bulgarian newspaper scans"
+requires-python = ">=3.11"
+dependencies = ["openai>=1.68", "braintrust==0.30.1", "Pillow>=10.0", "pydantic>=2.7", "PyYAML>=6.0", "opencv-python-headless>=4.10", "numpy>=2.0", "fastapi>=0.115", "uvicorn>=0.34", "python-multipart>=0.0.20", "python-dotenv>=1.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+sofia-harness = "sofia_harness.cli:main"
+sofia-system = "sofia_harness.system_cli:main"
+past-forward-search = "sofia_harness.archive_index:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sofia_harness = ["static/*.png", "static/landing-papers/*.jpg"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

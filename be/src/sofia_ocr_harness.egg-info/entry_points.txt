@@ -1,0 +1,4 @@
+[console_scripts]
+past-forward-search = sofia_harness.archive_index:main
+sofia-harness = sofia_harness.cli:main
+sofia-system = sofia_harness.system_cli:main
