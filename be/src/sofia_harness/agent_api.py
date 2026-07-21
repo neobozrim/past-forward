@@ -15,7 +15,7 @@ from .overlay_agent import apply_typography,place_two_point_with_api,place_with_
 from .archive_index import hybrid_search
 
 IMAGE_SUFFIXES={".png",".jpg",".jpeg",".tif",".tiff",".webp"}
-PROJECT_ROOT=Path(__file__).resolve().parents[2]
+PROJECT_ROOT=Path(os.getenv("PAST_FORWARD_PROJECT_ROOT",Path(__file__).resolve().parents[2])).resolve()
 jobs={};conversations={};active_resumes=set();lock=threading.Lock()
 
 def _normalized_transcription(folder:Path,stem:str)->dict:
